@@ -1,17 +1,25 @@
-import React from 'react';
 import ReactDOM from 'react-dom';
+import React from 'react';
 import './index.css';
+import AWSAppSyncClient from 'aws-appsync';
+import { ApolloProvider } from 'react-apollo';
+import { Rehydrated } from 'aws-appsync-react';
 import App from './App';
-import reportWebVitals from './reportWebVitals';
+
+const client = new AWSAppSyncClient({
+  url: process.env.REACT_APP_APPSYNC_URL,
+  region: process.env.REACT_APP_REGION,
+  auth: {
+    type: process.env.REACT_APP_AUTH_TYPE,
+    apiKey: process.env.REACT_APP_APPSYNC_KEY,
+  },
+});
 
 ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
-  document.getElementById('root')
+  <ApolloProvider client={client}>
+    <Rehydrated>
+      <App />
+    </Rehydrated>
+  </ApolloProvider>,
+  document.getElementById('root'),
 );
-
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();
