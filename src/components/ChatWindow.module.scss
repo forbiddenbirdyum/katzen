@@ -1,0 +1,15 @@
+.chat-window {
+  &-message {
+    font-size: 1.2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: .2em 1em;
+    &-content {
+
+    }
+    &-timestamp {
+      font-size: .8rem;
+    }
+  }
+}

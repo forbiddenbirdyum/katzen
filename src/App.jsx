@@ -1,13 +1,11 @@
 import React from 'react';
-import ChatWindow from './components/ChatWindow';
-import ChatInput from './components/ChatInput';
+import Chat from './Chat';
 import './App.css';
 
 function App() {
   return (
     <div className="App">
-      <ChatWindow />
-      <ChatInput />
+      <Chat />
     </div>
   );
 }
