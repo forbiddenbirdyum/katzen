@@ -1,0 +1,77 @@
+@use "base" as b;
+
+.App {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  max-width: 1140px;
+  margin: 0 auto;
+  letter-spacing: 0.03em;
+}
+
+.chat-container {
+    width: 94%;
+    min-height: 98vh;
+    /* max-height: 98vh; */
+    margin: 0.4em;
+    border: 1px solid b.$light-border-color;
+    border-radius: b.$border-radius;
+    display:flex;
+    justify-content:flex-end;
+    align-items:center;
+    flex-direction:column;
+    line-height: 1.3;
+    gap: 0.25em;
+    background: rgba($color: #b2daaf, $alpha: 0.11);
+}
+
+.chatlog {
+    width: 98%;
+    display: flex;
+    flex-direction: column;
+    padding: 0.2em;
+    gap: 0.2em;
+
+    .message {
+      width:100%;
+      padding: 0.4em 0.3em;
+      border: 1px solid b.$light-border-color;
+      border-radius: b.$border-radius;
+
+    &:nth-of-type(even) {
+     background-color: rgba($color: #000000, $alpha: 0.06);
+    }
+  }
+}
+
+.message-box {
+    margin-bottom: 0.2em;
+    background: rgba(78, 160, 109, 0.10);
+    border-radius: b.$border-radius;
+    width: 98%;
+    display: flex;
+    padding: 0.4em 0.2em;
+    
+    .text-input {
+        width:100%;
+        padding: 0.4em;
+        border-radius: b.$border-radius;
+        border: 1px solid b.$dark-border-color;
+    }
+
+    .submit-btn {
+        font-weight: bold;
+        letter-spacing: 0.06em;
+        padding: 0.4em 0.8em;
+        margin-left: 0.1em;
+        border: 1px solid b.$dark-border-color;
+        border-radius: b.$border-radius;
+        cursor:pointer;
+        transition: background 0.4s ease-out;
+
+        &:hover {
+            background: #abecab;
+        }
+    }
+}

@@ -16,9 +16,9 @@ query listMessages {
 
 function Chat({ messages }) {
   return (
-    <div>
+    <section className="chatlog">
       {messages.map((message) => (<span className="message" key={message.messageID}>{message.message}</span>))}
-    </div>
+    </section>
   );
 }
 

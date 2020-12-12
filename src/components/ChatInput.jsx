@@ -1,9 +1,9 @@
 import React from 'react';
 
 const ChatInput = () => (
-  <div>
-    <input type="text" />
-    <input type="submit" />
+  <div className="message-box">
+    <input className="text-input" type="text" />
+    <input className="submit-btn" type="submit" />
   </div>
 );
 
