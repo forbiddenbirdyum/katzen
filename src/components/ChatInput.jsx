@@ -39,9 +39,9 @@ const ChatInput = ({ addMessage }) => {
     setMessage('');
   };
   return (
-    <form className={styles['chat-input-form']} onSubmit={handleSubmit}>
-      <input value={message} onChange={(e) => setMessage(e.target.value)} type="text" />
-      <input type="submit" />
+    <form className={styles['message-box']} onSubmit={handleSubmit}>
+      <input className={styles['text-input']} value={message} onChange={(e) => setMessage(e.target.value)} type="text" />
+      <input className={styles['submit-btn']} type="submit" />
     </form>
   );
 };

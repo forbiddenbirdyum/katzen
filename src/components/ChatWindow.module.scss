@@ -1,15 +1,24 @@
-.chat-window {
-  &-message {
-    font-size: 1.2rem;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin: .2em 1em;
-    &-content {
+@use "../styles/base" as b;
 
+.chat-window {
+  width: 98%;
+  display: flex;
+  flex-direction: column;
+  padding: 0.2em;
+  gap: 0.2em;
+
+  .message {
+    width:100%;
+    padding: 0.4em 0.3em;
+    border: 1px solid b.$light-border-color;
+    border-radius: b.$border-radius;
+    display: flex;
+    justify-content: space-between;
+    .timestamp {
+      font-size: .7rem;
     }
-    &-timestamp {
-      font-size: .8rem;
+    &:nth-of-type(even) {
+      background-color: rgba($color: #000000, $alpha: 0.06);
     }
   }
 }

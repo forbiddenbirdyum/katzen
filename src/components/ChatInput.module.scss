@@ -1,4 +1,31 @@
+@use "../styles/base" as b;
+.message-box {
+    margin-bottom: 0.2em;
+    background: rgba(78, 160, 109, 0.10);
+    border-radius: b.$border-radius;
+    width: 98%;
+    display: flex;
+    padding: 0.4em 0.2em;
+    
+    .text-input {
+        width:100%;
+        padding: 0.4em;
+        border-radius: b.$border-radius;
+        border: 1px solid b.$dark-border-color;
+    }
 
-.chat-input-form {
-    border: 1px solid black;
+    .submit-btn {
+        font-weight: bold;
+        letter-spacing: 0.06em;
+        padding: 0.4em 0.8em;
+        margin-left: 0.1em;
+        border: 1px solid b.$dark-border-color;
+        border-radius: b.$border-radius;
+        cursor:pointer;
+        transition: background 0.4s ease-out;
+
+        &:hover {
+            background: #abecab;
+        }
+    }
 }

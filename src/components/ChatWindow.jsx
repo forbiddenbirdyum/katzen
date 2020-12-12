@@ -25,7 +25,7 @@ subscription messageSub {
 }
 `;
 
-const formatDate = (date) => new Intl.DateTimeFormat('en-US').format(date);
+const formatDate = (date) => new Intl.DateTimeFormat('en-US', { dateStyle: 'short', timeStyle: 'short' }).format(date);
 
 // TODO infinite scroll with pagination
 function ChatWindow({ messages, subMessageCreated }) {
@@ -33,14 +33,14 @@ function ChatWindow({ messages, subMessageCreated }) {
     subMessageCreated();
   }, []);
   return (
-    <div className={styles['chat-window']}>
+    <section className={styles['chat-window']}>
       {messages.sort((a, b) => a.timestamp - b.timestamp).map((message) => (
-        <div className={styles['chat-window-message']} key={message.messageID}>
-          <span className={styles['chat-window-message-content']}>{message.message}</span>
-          <span className={styles['chat-window-message-timestamp']}>{formatDate(message.timestamp)}</span>
+        <div className={styles.message} key={message.messageID}>
+          <span className={styles.content}>{message.message}</span>
+          <span className={styles.timestamp}>{formatDate(message.timestamp)}</span>
         </div>
       ))}
-    </div>
+    </section>
   );
 }
 
