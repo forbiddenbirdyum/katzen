@@ -1,6 +1,6 @@
 import React from 'react';
-import { ChatInput, ChatWindow } from './components';
 import styles from './Chat.module.scss';
+import { ChatInput, ChatWindow } from './components';
 
 const Chat = () => (
   <div className={styles['chat-container']}>

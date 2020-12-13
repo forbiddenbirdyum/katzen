@@ -1,16 +1,17 @@
 //variables
 $border-radius: 0.2em;
 $dark-border-color: #625f5f;
-$light-border-color: #D1D1D1;
+$light-border-color: #d1d1d1;
+$highlight-bg: rgba(78, 160, 109, 0.1);
 
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
 body {
-  font-family: "Roboto", sans-serif;
+  font-family: 'Roboto', sans-serif;
   font-weight: 400;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;

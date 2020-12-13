@@ -1,8 +1,8 @@
-import React from 'react';
-import { nanoid } from 'nanoid';
 import { graphqlMutation } from 'aws-appsync-react';
-import styles from './ChatInput.module.scss';
+import { nanoid } from 'nanoid';
+import React from 'react';
 import { CreateMessage, ListMessages } from '../queries';
+import styles from './ChatInput.module.scss';
 
 const ChatInput = ({ createMessage }) => {
   const [message, setMessage] = React.useState('');

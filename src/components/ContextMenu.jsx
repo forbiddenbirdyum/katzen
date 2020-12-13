@@ -1,4 +1,6 @@
 import React from 'react';
+import { FaTrashAlt } from 'react-icons/fa';
+import { MdEdit } from 'react-icons/md';
 import styles from './ContextMenu.module.scss';
 
 const ContextMenu = React.forwardRef(({
@@ -13,13 +15,15 @@ const ContextMenu = React.forwardRef(({
     className={styles['context-menu']}
   >
     <div className={styles.item}>
-      <button onClick={handleEdit} className={styles.button} type="button">
+      <button onClick={handleEdit} className={styles.button} type="button" title="Edit message">
         Edit Message
+        <MdEdit className={styles.editIcon} />
       </button>
     </div>
     <div className={styles.item}>
-      <button onClick={handleDelete} className={styles.button} type="button">
+      <button onClick={handleDelete} className={styles.button} type="button" title="Delete message">
         Delete Message
+        <FaTrashAlt className={styles.deleteIcon} />
       </button>
     </div>
   </div>

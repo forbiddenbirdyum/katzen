@@ -1,18 +1,43 @@
+@use "../styles/base" as b;
+
 .context-menu {
   position: absolute;
   z-index: 10;
-  background-color: white;
+  background-color: rgb(243, 248, 238);
+  border: 1px solid b.$light-border-color;
+  border-radius: b.$border-radius;
   display: flex;
   flex-direction: column;
-  padding: 1em;
+  padding: 0.35em;
+
   .item {
-    margin: .5em 0;
+    &:last-child {
+      &:hover {
+        background: rgba(253, 2, 2, 0.16);
+      }
+    }
+
     .button {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1em;
+      padding: 0.4em 0.6em;
       font-size: inherit;
-      background: none;
       font-family: inherit;
+      background: none;
+      border-radius: b.$border-radius;
       border: none;
       cursor: pointer;
+
+      &:hover {
+        background: b.$highlight-bg;
+      }
+
+      .deleteIcon {
+        color: rgb(233, 77, 77);
+      }
     }
   }
 }

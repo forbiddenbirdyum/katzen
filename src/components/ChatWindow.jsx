@@ -1,12 +1,12 @@
-import React from 'react';
-import { graphql, compose } from 'react-apollo';
-import { graphqlMutation } from 'aws-appsync-react';
 import { buildSubscription } from 'aws-appsync';
-import styles from './ChatWindow.module.scss';
-import ContextMenu from './ContextMenu';
+import { graphqlMutation } from 'aws-appsync-react';
+import React from 'react';
+import { compose, graphql } from 'react-apollo';
 import {
   DeleteMessage, ListMessages, MessageCreated, MessageDeleted,
 } from '../queries';
+import styles from './ChatWindow.module.scss';
+import ContextMenu from './ContextMenu';
 
 const formatDate = (date) => new Intl.DateTimeFormat('en-US', { dateStyle: 'short', timeStyle: 'short' }).format(date);
 
