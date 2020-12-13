@@ -1,5 +1,7 @@
 import React from 'react';
 import { graphql, compose } from 'react-apollo';
+import { graphqlMutation } from 'aws-appsync-react';
+import { buildSubscription } from 'aws-appsync';
 import styles from './ChatWindow.module.scss';
 import ContextMenu from './ContextMenu';
 import {
@@ -10,7 +12,7 @@ const formatDate = (date) => new Intl.DateTimeFormat('en-US', { dateStyle: 'shor
 
 // TODO infinite scroll with pagination
 function ChatWindow({
-  messages, subMessageCreated, subMessageDeleted, removeMessage,
+  messages, subscribeToMore, deleteMessage,
 }) {
   const [open, toggleOpen] = React.useState(false);
   const [posX, setPosX] = React.useState(0);
@@ -38,19 +40,17 @@ function ChatWindow({
   };
 
   const handleDelete = () => {
-    console.log('deleting', selected);
-    removeMessage(selected);
+    deleteMessage(selected);
     toggleOpen(false);
   };
 
   const handleEdit = () => {
-    console.log('editing', selected);
     toggleOpen(false);
   };
 
   React.useEffect(() => {
-    subMessageCreated();
-    subMessageDeleted();
+    subscribeToMore(buildSubscription(MessageCreated, ListMessages, 'messageID'));
+    subscribeToMore(buildSubscription(MessageDeleted, ListMessages, 'messageID'));
   }, []);
   React.useEffect(() => {
     const handleOutsideClick = (e) => {
@@ -65,7 +65,6 @@ function ChatWindow({
       document.removeEventListener('mousedown', handleOutsideClick);
     };
   }, [messageRef]);
-  console.log(messages);
   return (
     <section className={styles['chat-window']}>
       {messages.sort((a, b) => a.timestamp - b.timestamp).map((message) => (
@@ -95,60 +94,12 @@ function ChatWindow({
 export default compose(
   graphql(ListMessages, {
     options: {
-      fetchPolicy: 'network-only',
+      fetchPolicy: 'cache-and-network',
     },
     props: (props) => ({
       messages: props.data.listMessages ? props.data.listMessages.items : [],
-      subMessageDeleted: () => {
-        props.data.subscribeToMore({
-          document: MessageDeleted,
-          updateQuery: (prev, { subscriptionData: { data: { onDeleteMessage } } }) => ({
-            ...prev,
-            listMessages: { __typename: 'MessageConnection', items: prev.listMessages.items.filter((message) => message.messageID !== onDeleteMessage.messageID) },
-          }),
-        });
-      },
-      subMessageCreated: () => {
-        props.data.subscribeToMore({
-          document: MessageCreated,
-          updateQuery: (prev, { subscriptionData: { data: { onCreateMessage } } }) => {
-            console.log('SUBSCRIPTION UPDATE');
-            console.log('subscribe', prev);
-            console.log('subscribe', onCreateMessage);
-            const items = [...prev.listMessages.items
-              .filter((message) => message.messageID !== onCreateMessage.messageID),
-            onCreateMessage,
-            ];
-            return ({
-              listMessages: { __typename: 'MessageConnection', items },
-            });
-          },
-        });
-      },
+      subscribeToMore: props.data.subscribeToMore,
     }),
   }),
-  graphql(DeleteMessage, {
-    options: {
-      update: (dataProxy, { data: { deleteMessage } }) => {
-        const query = ListMessages;
-        const data = dataProxy.readQuery({ query });
-        console.log('DELETE UPDATE');
-        data.listMessages.items = [...data.listMessages.items
-          .filter((message) => message.messageID !== deleteMessage.messageID)];
-        console.log('Delete', data.listMessages);
-        console.log('Delete', deleteMessage);
-        dataProxy.writeQuery({ query, data });
-      },
-    },
-    props: (props) => ({
-      removeMessage: (message) => {
-        props.mutate({
-          variables: message,
-          /* optimisticResponse: () => ({
-            deleteMessage: { ...message, __typename: 'Message' },
-          }), */
-        });
-      },
-    }),
-  }),
+  graphqlMutation(DeleteMessage, ListMessages, 'Messages', 'messageID'),
 )(ChatWindow);
