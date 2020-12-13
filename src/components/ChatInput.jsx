@@ -1,33 +1,8 @@
 import React from 'react';
-import gql from 'graphql-tag';
 import { nanoid } from 'nanoid';
 import { graphql } from 'react-apollo';
 import styles from './ChatInput.module.scss';
-
-const CreateMessage = gql`
-mutation createMessage($messageID: String!, $message: String!, $timestamp: Long!) {
-  createMessage(input: {
-    messageID: $messageID
-    message: $message
-    timestamp: $timestamp
-  }) {
-    messageID
-    timestamp
-    message
-  }
-} 
-`;
-const ListMessages = gql`
-query listMessages {
-  listMessages {
-    items {
-      messageID
-      timestamp
-      message
-    }
-  }
-} 
-`;
+import { CreateMessage, ListMessages } from '../queries';
 
 const ChatInput = ({ addMessage }) => {
   const [message, setMessage] = React.useState('');
@@ -51,9 +26,8 @@ export default graphql(CreateMessage, {
     update: (dataProxy, { data: { createMessage } }) => {
       const query = ListMessages;
       const data = dataProxy.readQuery({ query });
-      data.listMessages.items.push(createMessage);
-      data.listMessages.items = [createMessage, ...data.listMessages.items
-        .filter((message) => message.messageID !== createMessage.messageID)];
+      data.listMessages.items = data.listMessages.items
+        .filter((message) => message.messageID !== createMessage.messageID);
       dataProxy.writeQuery({ query, data });
     },
   },
